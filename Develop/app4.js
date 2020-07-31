@@ -122,26 +122,24 @@ function manager() {
             managerQues,       
         )
             .then(response => {
-            // let managerName = response.managerName
-            // let managerID = response.managerID
-            // let managerEmail = response.managerEmail
-            // let managerOffice = response.officeNumber
-            // let selection = response.teamMember
-            // console.log(managerName)
-            // console.log(managerID)
-            // console.log(managerEmail)
-            // console.log(managerOffice)
-            // console.log(selection)
-            // console.log(response)
-            team.push(response)
+                let manager = new Manager (response.managerName,response.managerID,response.managerEmail,response.officeNumber)
+            team.push(manager)
             console.log(team)
 
-            if (response.teamMember==="Engineer") {
-                engineer();
-            } else if (response.teamMember==="Intern") {
-                intern();
+            switch(response.teamMember){
+                case "Engineer": {
+                    engineer();
+                    break;
                 }
-                    else return;
+                case "Intern": {
+                    intern();
+                    break;
+                }
+                default: {
+                    return;
+                }
+            }
+
         })
     }
 
@@ -151,26 +149,25 @@ function manager() {
                 engineerQues,
             )
                 .then(response => {
-                // let managerName = response.managerName
-                // let managerID = response.managerID
-                // let managerEmail = response.managerEmail
-                // let managerOffice = response.officeNumber
-                // let selection = response.teamMember
-                // console.log(managerName)
-                // console.log(managerID)
-                // console.log(managerEmail)
-                // console.log(managerOffice)
-                // console.log(selection)
-                // console.log(response)
-                team.push(response)
+                    let engineer = new Engineer (response.engineerName,response.engineerID,response.engineerEmail,response.gitUser)
+ 
+                team.push(engineer)
                 console.log(team)
 
-                if (response.teamMember==="Engineer") {
-                    engineer();
-                } else if (response.teamMember==="Intern") {
-                    intern();
+                switch(response.teamMember){
+                    case "Engineer": {
+                        engineer();
+                        break;
                     }
-                        else return;
+                    case "Intern": {
+                        intern();
+                        break;
+                    }
+                    default: {
+                        return;
+                    }
+                }
+
             })
         }
 
@@ -180,38 +177,35 @@ function manager() {
                 internQues,
             )
                 .then(response => {
-                // let managerName = response.managerName
-                // let managerID = response.managerID
-                // let managerEmail = response.managerEmail
-                // let managerOffice = response.officeNumber
-                // let selection = response.teamMember
-                // console.log(managerName)
-                // console.log(managerID)
-                // console.log(managerEmail)
-                // console.log(managerOffice)
-                // console.log(selection)
-                // console.log(response)
-                team.push(response)
+                let intern = new Intern(response.internName,response.internID,response.internEmail,response.internSchool)
+
+                team.push(intern)
                 console.log(team)
 
-                if (response.teamMember==="Engineer") {
-                    engineer();
-                } else if (response.teamMember==="Intern") {
-                    intern();
+                switch(response.teamMember){
+                    case "Engineer": {
+                        engineer();
+                        break;
                     }
-                        else return;
+                    case "Intern": {
+                        intern();
+                        break;
+                    }
+                    default: {
+                        return;
+                    }
+                }
+
             })
         }
 
-    manager();
-    // render();
-       
-    // function init() {
-    // manager();
-    // render();
-    // }
+    function init () {
+        manager();
+        // console.log(team)
+    }
 
-    // init();
+    init();
+
 
 // After the user has input all employees desired, call the `render` function (required
 // above) and pass in an array containing all employee objects; the `render` function will

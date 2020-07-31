@@ -122,6 +122,7 @@ function manager() {
             managerQues,       
         )
             .then(response => {
+                let manager = new Manager (response.managerName,response.managerID,response.managerEmail,response.officeNumber)
             // let managerName = response.managerName
             // let managerID = response.managerID
             // let managerEmail = response.managerEmail
@@ -134,14 +135,28 @@ function manager() {
             // console.log(selection)
             // console.log(response)
             team.push(response)
-            console.log(team)
+            console.log(manager)
 
-            if (response.teamMember==="Engineer") {
-                engineer();
-            } else if (response.teamMember==="Intern") {
-                intern();
+            switch(response.teamMember){
+                case "Engineer": {
+                    engineer();
+                    break;
                 }
-                    else return;
+                case "Intern": {
+                    intern();
+                    break;
+                }
+                default: {
+                    return;
+                }
+            }
+
+            // if (response.teamMember==="Engineer") {
+            //     engineer();
+            // } else if (response.teamMember==="Intern") {
+            //     intern();
+            //     }
+            //         else return;
         })
     }
 
@@ -151,6 +166,7 @@ function manager() {
                 engineerQues,
             )
                 .then(response => {
+                    let engineer = new Engineer (response.engineerName,response.engineerID,response.engineerEmail,response.gitUser)
                 // let managerName = response.managerName
                 // let managerID = response.managerID
                 // let managerEmail = response.managerEmail
@@ -163,14 +179,28 @@ function manager() {
                 // console.log(selection)
                 // console.log(response)
                 team.push(response)
-                console.log(team)
+                console.log(engineer)
 
-                if (response.teamMember==="Engineer") {
-                    engineer();
-                } else if (response.teamMember==="Intern") {
-                    intern();
+                switch(response.teamMember){
+                    case "Engineer": {
+                        engineer();
+                        break;
                     }
-                        else return;
+                    case "Intern": {
+                        intern();
+                        break;
+                    }
+                    default: {
+                        return;
+                    }
+                }
+
+                // if (response.teamMember==="Engineer") {
+                //     engineer();
+                // } else if (response.teamMember==="Intern") {
+                //     intern();
+                //     }
+                //         else return;
             })
         }
 
@@ -180,6 +210,7 @@ function manager() {
                 internQues,
             )
                 .then(response => {
+                let intern = new Intern(response.internName,response.internID,response.internEmail,response.internSchool)
                 // let managerName = response.managerName
                 // let managerID = response.managerID
                 // let managerEmail = response.managerEmail
@@ -192,14 +223,28 @@ function manager() {
                 // console.log(selection)
                 // console.log(response)
                 team.push(response)
-                console.log(team)
+                console.log(intern)
 
-                if (response.teamMember==="Engineer") {
-                    engineer();
-                } else if (response.teamMember==="Intern") {
-                    intern();
+                switch(response.teamMember){
+                    case "Engineer": {
+                        engineer();
+                        break;
                     }
-                        else return;
+                    case "Intern": {
+                        intern();
+                        break;
+                    }
+                    default: {
+                        return;
+                    }
+                }
+
+                // if (response.teamMember==="Engineer") {
+                //     engineer();
+                // } else if (response.teamMember==="Intern") {
+                //     intern();
+                //     }
+                //         else return;
             })
         }
 
