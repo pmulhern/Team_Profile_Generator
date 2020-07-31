@@ -9,39 +9,45 @@ const OUTPUT_DIR = path.resolve(__dirname, "output");
 const outputPath = path.join(OUTPUT_DIR, "team.html");
 
 const render = require("./lib/htmlRenderer");
+const { inherits } = require("util");
+
+let team = []
 
 // Write code to use inquirer to gather information about the development team members,
 // and to create objects for each team member (using the correct classes as blueprints!)
-
-// Inquirer prompts
-inquirer
-    .prompt([
-        {
-            type: "input",
-            message: "What is your manager's name?",
-            name: "managerName"
-        },
-        {
-            type: "input",
-            message: "What is your manager's ID?",
-            name: "managerID"
-        },
-        
-        {
-            type: "input",
-            message: "What is your manager's office number?",
-            name: "officeNumber"
-        },
-        {
-            type: "list",
-            message: "Which type of team member would you like to add?",
-            name: "teamMember",
-            choices: [
-                "Engineer",
-                "Intern",
-            ]
-        }
-    ])
+let managerQues =
+[
+    {
+        type: "input",
+        message: "What is your manager's name?",
+        name: "managerName"
+    },
+    {
+        type: "input",
+        message: "What is your manager's ID?",
+        name: "managerID"
+    },
+    {
+        type: "input",
+        message: "What is your manager's email address?",
+        name: "managerEmail"
+    },
+    {
+        type: "input",
+        message: "What is your manager's office number?",
+        name: "officeNumber"
+    },
+    {
+        type: "list",
+        message: "Which type of team member would you like to add?",
+        name: "teamMember",
+        choices: [
+            "Engineer",
+            "Intern",
+            "No more team members to add"
+        ]
+    }
+];
 
 let engineerQues = [
     {
@@ -56,6 +62,11 @@ let engineerQues = [
     },
     {
         type: "input",
+        message: "What is your engineer's email address?",
+        name: "engineerEmail"
+    },
+    {
+        type: "input",
         message: "What is your engineer's GitHub User Name?",
         name: "gitUser"
     },
@@ -66,9 +77,200 @@ let engineerQues = [
         choices: [
             "Engineer",
             "Intern",
+            "No more team members to add"
         ]
     }
-]
+];
+
+let internQues = [
+    {
+        type: "input",
+        message: "What is your intern's name?",
+        name: "internName"
+    },
+    {
+        type: "input",
+        message: "What is your intern's ID?",
+        name: "internID"
+    },
+    {
+        type: "input",
+        message: "What is your intern's email address?",
+        name: "internEmail"
+    },
+    {
+        type: "input",
+        message: "What is your intern's school's name?",
+        name: "internSchool"
+    },
+    {
+        type: "list",
+        message: "Would you like to add another team member?",
+        name: "teamMember",
+        choices: [
+            "Engineer",
+            "Intern",
+            "No more team members to add"
+        ]
+    }
+];
+
+
+// Inquirer prompts
+function manager() {
+    inquirer
+        .prompt(
+            managerQues,       
+        )
+            .then(response => {
+                let manager = new Manager (response.managerName,response.managerID,response.managerEmail,response.officeNumber)
+            team.push(manager)
+            console.log(team)
+
+            switch(response.teamMember){
+                case "Engineer": {
+                    engineer();
+                    break;
+                }
+                case "Intern": {
+                    intern();
+                    break;
+                }
+                default: {
+                    writeHTML();
+                }
+            }
+            
+        })
+        let html = render(team) 
+        function writeHTML() {
+            fs.writeFile(outputPath, html, function(err) {
+        
+                    if (err) {
+                      return console.log(err);
+                    }
+                  
+                    // console.log("Success!");
+                  
+                  });
+            }
+            writeHTML();
+        
+    }
+
+    function engineer() {
+        inquirer
+            .prompt(     
+                engineerQues,
+            )
+                .then(response => {
+                    let engineer = new Engineer (response.engineerName,response.engineerID,response.engineerEmail,response.gitUser)
+ 
+                team.push(engineer)
+                console.log(team)
+
+                switch(response.teamMember){
+                    case "Engineer": {
+                        this.engineer();
+                        break;
+                    }
+                    case "Intern": {
+                        intern();
+                        break;
+                    }
+                    default: {clear
+                        writeHTML();
+                    }
+                }
+                
+            })
+            let html = render(team) 
+            function writeHTML() {
+                fs.writeFile(outputPath, html, function(err) {
+            
+                        if (err) {
+                          return console.log(err);
+                        }
+                      
+                        // console.log("Success!");
+                      
+                      });
+                }
+                writeHTML();
+            
+        }
+
+    function intern() {
+        inquirer
+            .prompt(     
+                internQues,
+            )
+                .then(response => {
+                let intern = new Intern(response.internName,response.internID,response.internEmail,response.internSchool)
+
+                team.push(intern)
+                console.log(team)
+
+                switch(response.teamMember){
+                    case "Engineer": {
+                        engineer();
+                        break;
+                    }
+                    case "Intern": {
+                        this.intern();
+                        break;
+                    }
+                    default: {
+                        writeHTML();
+                    }
+                }
+                
+            })
+            let html = render(team) 
+            function writeHTML() {
+                fs.writeFile(outputPath, html, function(err) {
+            
+                        if (err) {
+                          return console.log(err);
+                        }
+                      
+                        // console.log("Success!");
+                      
+                      });
+                }
+                writeHTML();
+            
+        }
+
+
+    function init() {
+        manager()
+    }
+    init();
+
+
+    
+    // function writeHTML() {
+    // fs.writeFile(outputPath, html, function(err) {
+
+    //         if (err) {
+    //           return console.log(err);
+    //         }
+          
+    //         console.log("Success!");
+          
+    //       });
+    // }
+    // writeHTML();
+    
+    // console.log(team)
+
+
+    // init().then(response =>{
+    //     render(team);
+    // })
+    
+
 
 // After the user has input all employees desired, call the `render` function (required
 // above) and pass in an array containing all employee objects; the `render` function will
