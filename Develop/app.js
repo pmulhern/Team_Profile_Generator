@@ -37,16 +37,6 @@ let managerQues =
         message: "What is your manager's office number?",
         name: "officeNumber"
     },
-    {
-        type: "list",
-        message: "Which type of team member would you like to add?",
-        name: "teamMember",
-        choices: [
-            "Engineer",
-            "Intern",
-            "No more team members to add"
-        ]
-    }
 ];
 
 let engineerQues = [
@@ -70,16 +60,6 @@ let engineerQues = [
         message: "What is your engineer's GitHub User Name?",
         name: "gitUser"
     },
-    {
-        type: "list",
-        message: "Would you like to add another team member?",
-        name: "teamMember",
-        choices: [
-            "Engineer",
-            "Intern",
-            "No more team members to add"
-        ]
-    }
 ];
 
 let internQues = [
@@ -103,173 +83,84 @@ let internQues = [
         message: "What is your intern's school's name?",
         name: "internSchool"
     },
-    {
-        type: "list",
-        message: "Would you like to add another team member?",
-        name: "teamMember",
-        choices: [
-            "Engineer",
-            "Intern",
-            "No more team members to add"
-        ]
-    }
 ];
-
 
 // Inquirer prompts
 function manager() {
     inquirer
         .prompt(
-            managerQues,       
+            managerQues,
         )
-            .then(response => {
+            .then(function (response) {
                 let manager = new Manager (response.managerName,response.managerID,response.managerEmail,response.officeNumber)
             team.push(manager)
             console.log(team)
-
-            switch(response.teamMember){
-                case "Engineer": {
-                    engineer();
-                    break;
-                }
-                case "Intern": {
-                    intern();
-                    break;
-                }
-                default: {
-                    writeHTML();
-                }
-            }
-            
-        })
-        let html = render(team) 
-        function writeHTML() {
-            fs.writeFile(outputPath, html, function(err) {
-        
-                    if (err) {
-                      return console.log(err);
-                    }
-                  
-                    // console.log("Success!");
-                  
-                  });
-            }
-            writeHTML();
-        
-    }
-
+            addTeamMembers() 
+        })} 
+    
     function engineer() {
         inquirer
             .prompt(     
                 engineerQues,
             )
-                .then(response => {
+                .then(function(response){
                     let engineer = new Engineer (response.engineerName,response.engineerID,response.engineerEmail,response.gitUser)
- 
                 team.push(engineer)
                 console.log(team)
-
-                switch(response.teamMember){
-                    case "Engineer": {
-                        this.engineer();
-                        break;
-                    }
-                    case "Intern": {
-                        intern();
-                        break;
-                    }
-                    default: {clear
-                        writeHTML();
-                    }
-                }
-                
-            })
-            let html = render(team) 
-            function writeHTML() {
-                fs.writeFile(outputPath, html, function(err) {
-            
-                        if (err) {
-                          return console.log(err);
-                        }
-                      
-                        // console.log("Success!");
-                      
-                      });
-                }
-                writeHTML();
-            
-        }
+                addTeamMembers() 
+            })}
 
     function intern() {
         inquirer
             .prompt(     
                 internQues,
             )
-                .then(response => {
+                .then(function (response) {
                 let intern = new Intern(response.internName,response.internID,response.internEmail,response.internSchool)
-
                 team.push(intern)
                 console.log(team)
+                addTeamMembers()
+            })}
 
-                switch(response.teamMember){
-                    case "Engineer": {
+    function addTeamMembers() {
+        inquirer.prompt([
+            {
+            type: "list",
+            message: "Would you like to add another team member?",
+            name: "teamMember",
+            choices: [
+                        "Engineer",
+                        "Intern",
+                        "No more team members to add"
+                    ]
+            }])
+            .then(function(response) {
+                switch (response.teamMember) {
+                    case "Engineer":
                         engineer();
                         break;
-                    }
-                    case "Intern": {
-                        this.intern();
+    
+                    case "Intern":
+                        intern();
                         break;
-                    }
-                    default: {
+                    case "No more team members to add":
+                        let html = render(team) 
+                        
+                        function writeHTML() {
+                            fs.writeFile(outputPath, html, function(err) {
+                                if (err) {
+                                    return console.log(err);
+                        }})}
                         writeHTML();
-                    }
-                }
-                
-            })
-            let html = render(team) 
-            function writeHTML() {
-                fs.writeFile(outputPath, html, function(err) {
-            
-                        if (err) {
-                          return console.log(err);
-                        }
-                      
-                        // console.log("Success!");
-                      
-                      });
-                }
-                writeHTML();
-            
-        }
 
+                }
+            });
+    }
 
     function init() {
         manager()
     }
-    init();
-
-
-    
-    // function writeHTML() {
-    // fs.writeFile(outputPath, html, function(err) {
-
-    //         if (err) {
-    //           return console.log(err);
-    //         }
-          
-    //         console.log("Success!");
-          
-    //       });
-    // }
-    // writeHTML();
-    
-    // console.log(team)
-
-
-    // init().then(response =>{
-    //     render(team);
-    // })
-    
+    init(); 
 
 
 // After the user has input all employees desired, call the `render` function (required
