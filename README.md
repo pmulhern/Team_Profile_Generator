@@ -2,9 +2,9 @@
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-[![Video of Application](/develop/video.png)]( https://drive.google.com/file/d/1JmaUQmIrfZoxyhmv_kQWDOJJ3bOJyWnI/view)
+[![Video of Application](develop/video.png)]( https://drive.google.com/file/d/1JmaUQmIrfZoxyhmv_kQWDOJJ3bOJyWnI/view)
 
-![](/develop/FinalProduct.png)
+![](develop/FinalProduct.png)
 
 ## Description
 
