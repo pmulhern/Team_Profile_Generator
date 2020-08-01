@@ -11,10 +11,13 @@ const outputPath = path.join(OUTPUT_DIR, "team.html");
 const render = require("./lib/htmlRenderer");
 const { inherits } = require("util");
 
+// Set empty team array
 let team = []
 
 // Write code to use inquirer to gather information about the development team members,
 // and to create objects for each team member (using the correct classes as blueprints!)
+
+//Manager specific questions
 let managerQues =
 [
     {
@@ -38,7 +41,7 @@ let managerQues =
         name: "officeNumber"
     },
 ];
-
+//Engineer specific questions
 let engineerQues = [
     {
         type: "input",
@@ -61,7 +64,7 @@ let engineerQues = [
         name: "gitUser"
     },
 ];
-
+//Intern specific questions
 let internQues = [
     {
         type: "input",
@@ -86,6 +89,7 @@ let internQues = [
 ];
 
 // Inquirer prompts
+// Manager function/ prompt 
 function manager() {
     inquirer
         .prompt(
@@ -97,7 +101,8 @@ function manager() {
             console.log(team)
             addTeamMembers() 
         })} 
-    
+
+// Engineer function/ prompt 
     function engineer() {
         inquirer
             .prompt(     
@@ -109,7 +114,7 @@ function manager() {
                 console.log(team)
                 addTeamMembers() 
             })}
-
+// Intern function/ prompt 
     function intern() {
         inquirer
             .prompt(     
@@ -121,7 +126,7 @@ function manager() {
                 console.log(team)
                 addTeamMembers()
             })}
-
+// Intermediary function which allows the user to decide next steps i.e. add engineer, intern or complete
     function addTeamMembers() {
         inquirer.prompt([
             {
@@ -134,12 +139,12 @@ function manager() {
                         "No more team members to add"
                     ]
             }])
+            // Switch function which calls either engineer() or intern() functions or finalized html
             .then(function(response) {
                 switch (response.teamMember) {
                     case "Engineer":
                         engineer();
                         break;
-    
                     case "Intern":
                         intern();
                         break;
